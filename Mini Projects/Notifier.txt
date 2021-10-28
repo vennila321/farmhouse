@@ -1,0 +1,5 @@
+from plyer import notification
+import time
+while True:
+    notification.notify(title='remainder',message='take some rest')
+time.sleep(120)

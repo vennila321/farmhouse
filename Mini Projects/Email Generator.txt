@@ -1,0 +1,13 @@
+import smtplib,ssl
+import csv
+Server=smtplib.SMTP_SSL('Smtp.gmail.com',465)
+Server.login('vennila26041999@gmail.com','2604@1999')
+Sender_address='vennila26041999@gmail.com'
+with open('emails.csv','r') as file:
+    id=csv.reader(file,delimetre='\t')
+    for row in id:
+        receiver_address=row
+        text='good afternoon'
+        Server.sendmail(Sender_address,receiver_address,text)
+        print('email sent')
+        Server.quit

@@ -1,0 +1,83 @@
+from pytube import YouTube
+from tkinter import *
+from tkinter import ttk
+from tkinter import filedialog
+
+Folder_Name = ""
+
+
+def DownloadVideo():
+    choice = ytdchoices.get()
+    url = ytdEntry.get()
+
+    if(len(url)>1):
+        ytdError.config(text="")
+        yt=YouTube(url)
+
+        if(choice==choices[0]):
+            select=yt.streams.get_by_itag(22)
+        elif (choice == choices[1]):
+            select = yt.streams.get_by_itag(18)
+        elif(choice == choices[2]):
+            select = yt.streams.filter(only_audio=True).first()
+        else:
+            ytdError.config(text="Paste Link Again",fg="red")
+
+        select.download(Folder_Name)
+        ytdError.config(text='Download Completed')
+
+window = Tk()
+window.title("YTD Downloader")
+window.geometry("350x400")
+window.columnconfigure(0,weight=1)
+
+# Asking save file label
+ytdLabel= Label(window, text='Enter URL of the video', font=("jost", 15))
+ytdLabel.grid()
+
+ytdEntryVar=StringVar()
+ytdEntry=Entry(window,width=50,textvariable=ytdEntryVar)
+ytdEntry.grid()
+
+# Error Msg
+ytdError = Label(window, text="Error Msg", fg="red", font=("jost", 10))
+ytdError.grid()
+
+# Asking save file label
+lblsave = Label(window, text='Save the video File', font=("jost", 15, "bold"))
+lblsave.grid()
+
+# Error Msg Location
+locationError = Label(window, text='Error Msg of Path', fg='red', font=("jost", 10))
+locationError.grid()
+
+
+def filelocation():
+    global Folder_Name
+    Folder_Name = filedialog.askdirectory()
+    if (len(Folder_Name) > 1):
+        locationError.config(text=Folder_Name, fg="green")
+    else:
+        locationError.config(text=Folder_Name, fg="green")
+
+
+saveEntry = Button(window, width=10, bg='red', fg='white', text='Choose Path', command=filelocation)
+saveEntry.grid()
+
+# Download Quality
+ytdQuality = Label(window, text='Select Quality', font=("jost", 15))
+ytdQuality.grid()
+# comboBox
+choices = ["720p", "360p", "Only Audio"]
+ytdchoices = ttk.Combobox(window, values=choices)
+ytdchoices.grid()
+
+# downloadButton
+downloadbtn = Button(window, text="Download", width=10, bg="red", fg="white",command=DownloadVideo)
+downloadbtn.grid()
+
+# URL="https://www.youtube.com/watch?v=TckGcxwknYU"
+# video=YouTube(URL).streams.first()
+# video.download('D:\\srini')
+
+window.mainloop()

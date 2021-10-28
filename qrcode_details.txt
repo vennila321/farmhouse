@@ -1,0 +1,12 @@
+1)QR Code:
+store student details in QRCode for the following details:
+id
+name
+course
+location
+mobile num
+email id
+qualification
+batch
+
+

@@ -1,0 +1,23 @@
+!pip install tkinter
+!Pip install pytube
+from tkinter import *
+from pytube import YouTube
+root = Tk()
+root.geometry('500x300')
+root.title("youtube video downloader")
+lbl1=Label(root,text = 'Youtube Video Downloader', font ='arial 20 bold')
+lbl1.pack()
+link = StringVar()
+lbl2=Label(root, text = 'Paste Link Here:', font = 'arial 15 bold',fg='red')
+lbl2.place(x= 160 , y = 60)
+link_enter = Entry(root, width = 70,textvariable = link)
+link_enter.place(x = 32, y = 90)
+def Downloader():     
+    url =YouTube(str(link.get()))
+    video = url.streams.first()
+    video.download('d:\\vennila\\youtube video')
+    lbl2=Label(root, text = 'DOWNLOADED', font = 'arial 15')
+    lbl2.place(x= 180 , y = 210)  
+bt1=Button(root,text = 'DOWNLOAD', font = 'arial 15 bold' ,bg = 'pale violet red', padx = 2, command = Downloader)
+bt1.place(x=180 ,y = 150)
+root.mainloop()

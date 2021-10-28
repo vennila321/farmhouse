@@ -1,0 +1,40 @@
+from tkinter import *
+from tkinter import filedialog
+import requests
+import time
+Folder_Name = ""
+window=Tk()
+window.title("Instagram photo downloader")
+window.geometry("350x400")
+acc=StringVar()
+lbl1=Label(window,text='Enter the account name')
+lbl1.grid()
+txt1=Entry(window,textvariable=acc)
+txt1.grid()
+
+import instaloader as loader
+def DownloadVideo():
+    text=loader.Instaloader()
+    text.download_profile(acc,profile_pic_only=True)
+    lbl2=Label(window,text='Photo Downloaded')
+    lbl2.grid()
+# Error Msg Location
+locationError = Label(window, text='Error Msg of Path', fg='red', font=("jost", 10))
+locationError.grid()
+
+
+def filelocation():
+    global Folder_Name
+    Folder_Name = filedialog.askdirectory()
+    if (len(Folder_Name) > 1):
+        locationError.config(text=Folder_Name, fg="green")
+    else:
+        locationError.config(text=Folder_Name, fg="green")
+
+
+saveEntry = Button(window, width=10, bg='red', fg='white', text='Choose Path', command=filelocation)
+saveEntry.grid()
+# downloadButton
+downloadbtn = Button(window, text="Download", width=10, bg="red", fg="white",command=DownloadVideo)
+downloadbtn.grid()
+window.mainloop()

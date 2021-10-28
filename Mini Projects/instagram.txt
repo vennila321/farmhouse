@@ -1,0 +1,52 @@
+from pytube import YouTube
+from tkinter import *
+from tkinter import filedialog
+from bs4 import BeautifulSoup
+import requests
+from selenium import webdriver
+import time
+Folder_Name = ""
+window=Tk()
+window.title("Instagram photo downloader")
+window.geometry("350x400")
+url=StringVar()
+lbl1=Label(window,text='Enter the url of post')
+lbl1.grid()
+txt1=Entry(window,textvariable=url)
+txt1.grid()
+def DownloadVideo():
+    driver = webdriver.Chrome('chromedriver')
+    driver.get(url)
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+    img = soup.find('img', class_='FFVAD')
+    img_url = img['src']
+    r = requests.get(img_url)
+    with open("instagram"+str(time.time())+".png",'wb') as f: 
+         f.write(r.content)
+    lbl2=Label(window,text='Photo Downloaded')
+    lbl2.grid()
+# Error Msg Location
+locationError = Label(window, text='Error Msg of Path', fg='red', font=("jost", 10))
+locationError.grid()
+
+
+def filelocation():
+    global Folder_Name
+    Folder_Name = filedialog.askdirectory()
+    if (len(Folder_Name) > 1):
+        locationError.config(text=Folder_Name, fg="green")
+    else:
+        locationError.config(text=Folder_Name, fg="green")
+
+
+saveEntry = Button(window, width=10, bg='red', fg='white', text='Choose Path', command=filelocation)
+saveEntry.grid()
+# downloadButton
+downloadbtn = Button(window, text="Download", width=10, bg="red", fg="white",command=DownloadVideo)
+downloadbtn.grid()
+
+# URL="https://www.youtube.com/watch?v=TckGcxwknYU"
+# video=YouTube(URL).streams.first()
+# video.download('D:\\srini')
+
+window.mainloop()
