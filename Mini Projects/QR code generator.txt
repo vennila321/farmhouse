@@ -52,7 +52,7 @@ def generate():
     qualification=f.get()
     location=g.get()
     batch=h.get()
-    content=str(id)+"\n"+name+"\n"+course+"\n"+str(mobilenum)+emailid+qualification+location+batch
+    content=str(id)+"\n"+name+"\n"+course+"\n"+str(mobilenum)+emailid    +qualification+location+batch
     text=code.create(content)
     text.png(f'D:\\vennila\\newqr_{id}.jpg',scale=7)
     
